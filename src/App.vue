@@ -32,8 +32,15 @@
 
 
 <script>
+
+import mui from './assets/lib/mui/dist/js/mui.js'
+
 export default {
-  
+  mounted() {
+    mui("header, nav").on("tap", "a", function() {
+      mui.openWindow({url: this.href})
+    })
+  }
 }
 </script>
 
@@ -63,5 +70,9 @@ export default {
 .v-enter-active,
 .v-leave-active {
   transition: all .2s ease;
+}
+
+nav {
+  touch-action: pan-y;
 }
 </style>

@@ -5,13 +5,20 @@ import member from './components/tabbar/member.vue'
 import shopcar from './components/tabbar/shopcar.vue'
 import search from './components/tabbar/search.vue'
 
+import newsList from './components/news/newsList.vue'
+import newsInfo from './components/news/newsInfo.vue'
+import photolist from './components/photos/photoList.vue'
+
 export default new VueRouter({
     routes: [
         { path: '/', redirect: "/home" },
         { path: "/home", component: home },
         { path: "/member", component: member },
         { path: "/shopcar", component: shopcar },
-        { path: "/search", component: search }
+        { path: "/search", component: search },
+        { path: '/home/newsList', component: newsList },
+        { path: '/home/newsInfo/:id', component: newsInfo },
+        { path: '/home/photolist', component: photolist }
     ],
     linkActiveClass: "mui-active"
 })

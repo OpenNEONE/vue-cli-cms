@@ -7,6 +7,9 @@ module.exports = {
       }
     ]
   ],
+  "ignore": [
+    "./src/assets/lib/mui/dist/js/mui.js"
+  ],
   plugins: [        // Mint-ui官方教程   babel-plugin-component
     [
       'component',

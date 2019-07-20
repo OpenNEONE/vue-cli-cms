@@ -10,16 +10,16 @@
     <!-- 九宫格改造 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9 cms-nav-link">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/newsList">
           <img src="../../assets/images/menu1.png" alt />
           <div class="mui-media-body">新闻资讯</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/photolist">
           <img src="../../assets/images/menu2.png" alt />
           <div class="mui-media-body">图片分享</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -46,25 +46,27 @@
         </a>
       </li>
     </ul>
+    
   </div>
 </template>
 
 <script>
-import axios from "axios";
+
+import { Lunbo } from "@/api";
 import { Toast } from "mint-ui";
 
 export default {
   data() {
     return {
       sliderList: []
-    };
+    }
   },
   created() {
-    this.getSliders();
+    this.getSliders()
   },
   methods: {
     getSliders() {
-      axios.get("http://www.liulongbin.top:3005/api/getlunbo").then(res => {
+      Lunbo("http://www.liulongbin.top:3005/api/getlunbo").then(res => {
         if (res.data.status == 0) {
           this.sliderList = res.data.message;
         } else {
