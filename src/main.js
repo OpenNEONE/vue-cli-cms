@@ -20,6 +20,10 @@ import './assets/lib/mui/dist/css/icons-extra.css'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+// 4.0 使用 vue-preview
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+
 import router from './router.js'
 
 new Vue({

@@ -39,7 +39,7 @@
 
 import { Toast } from "mint-ui"
 import moment from 'moment'
-import { Comments } from '@/api'
+import { Comments, PostComment } from '@/api'
 
 export default {
   data() {
@@ -54,7 +54,10 @@ export default {
   },
   methods: {
     getComments() {
-      Comments("api/getcomments/" + this.id + "?pageindex=" + this.pageIndex)
+      Comments({
+        id: this.id,
+        pageIndex: this.pageIndex
+      })
         .then(res => {
           if (res.data.status === 0) {
             this.comments = this.comments.concat(res.data.message)
@@ -69,9 +72,7 @@ export default {
     },
     postComment() {
         // 1.0 发送请求携带的数据
-        axios.post('api/postcomment/'+ this.id, {
-            content: this.msg
-        })
+        PostComment(this.id, { content: this.msg })
         .then(res => {
             if(res.data.status == 0) {
                 // 2.0 发表成功之后的后续操作

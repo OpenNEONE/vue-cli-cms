@@ -34,8 +34,7 @@ export default {
     },
     methods: {
         getNewsInfo() {
-            NewsInfo('/api/getnew/' + this.id)
-            .then(res => {
+            NewsInfo(this.id).then(res => {
                 if(res.data.status == 0) {
                     this.newsinfo = res.data.message[0]
                 }

@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         getNewsList() {
-            NewList("api/getnewslist").then(res => {
+            NewList().then(res => {
                 if(res.data.status == 0) {
                     this.newsList = res.data.message
                 }

@@ -22,10 +22,10 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <img src="../../assets/images/menu3.png" alt />
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     getSliders() {
-      Lunbo("http://www.liulongbin.top:3005/api/getlunbo").then(res => {
+      Lunbo().then(res => {
         if (res.data.status == 0) {
           this.sliderList = res.data.message;
         } else {
