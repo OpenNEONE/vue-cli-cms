@@ -37,3 +37,19 @@ export var PicDetails = params => {
 export var Imgs = params => {
     return axios.get("/api/getthumimages/" + params).then(res => res)
 }
+
+export var GoodList = params => {
+    return axios.get("/api/getgoods?pageindex=" + params).then(res => res)
+}
+
+export var SwiperList = params => {
+    return axios.get("/api/getthumimages/" + params).then(res => res)
+}
+
+export var ProDetail = params => {
+    return axios.get("/api/goods/getinfo/" + params).then(res => res)
+}
+
+export var ProDesc = params => {
+    return axios.get("/api/goods/getdesc/" + params).then(res => res)
+}

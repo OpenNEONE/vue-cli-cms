@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- 轮播图 -->
-    <mt-swipe :auto="4000" class="sliders">
-      <mt-swipe-item v-for="item in sliderList" :key="item.id">
-        <img :src="item.img" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <swiper :swiperlist="sliderList"></swiper>
 
     <!-- 九宫格改造 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9 cms-nav-link">
@@ -55,6 +51,8 @@
 import { Lunbo } from "@/api";
 import { Toast } from "mint-ui";
 
+import swiper from '../comments/swiper.vue'
+
 export default {
   data() {
     return {
@@ -74,17 +72,15 @@ export default {
         }
       });
     }
+  },
+  components: {
+    swiper
   }
 };
 </script>
 
 <style scoped>
-.sliders {
-  height: 130px;
-}
-.sliders img {
-  width: 100%;
-}
+
 .mui-grid-view.cms-nav-link {
     background-color: #fff;
     border: none;
