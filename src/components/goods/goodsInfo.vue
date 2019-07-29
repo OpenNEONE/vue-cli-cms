@@ -9,7 +9,7 @@
                 <div class="ball" v-show="ballFlag" ref="ball"></div>
             </transition>
 
-			<div class="mui-card">
+			<div class="mui-card lunbo">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 						<swiper :swiperlist="picList"></swiper>
@@ -28,10 +28,7 @@
                             <strong>￥{{ proDetail.sell_price }}</strong>
                         </p>
                         <div class="number-box">
-                            购买数量：
-						    <number-box
-                            @getcount="getSelectedCount" 
-                            :maxNum="proDetail.stock_quantity"></number-box>
+                            购买数量：<number-box @getcount="getCount" :maxNum="proDetail.stock_quantity"></number-box>
                         </div>
                         <p class="choose-btn">
                             <mt-button type="primary" size="small">立即购买</mt-button>
@@ -106,6 +103,19 @@ export default {
         sendComm(id) {
             this.$router.push({ name: "comments", params: { id: id }  })
         },
+        addToShopcar() {
+            this.ballFlag = !this.ballFlag
+
+            // 产生需要添加到购物车中的商品信息对象
+            let proO = {
+                id: this.id,
+                count: this.selectedCount,
+                price: this.proDetail.sell_price,
+                selected: true
+            }
+            // commit 执行vuex中对应的函数，传入数据
+            this.$store.commit("addCart", proO)
+        },
         beforeEnter(el) {
             el.style.opacity = 1
             el.style.transform = "translate(0, 0)"
@@ -123,13 +133,10 @@ export default {
             el.style.transition = 'all .5s ease-in'
             done()
         },
-        afterEnter(el) {
+        afterEnter() {
             this.ballFlag = !this.ballFlag
         },
-        addToShopcar() {
-            this.ballFlag = !this.ballFlag
-        },
-        getSelectedCount(count) {
+        getCount(count) {
             this.selectedCount = count
         }
     },
@@ -145,7 +152,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+    .lunbo img {
+        height: 130px;
+        width: auto !important;
+    }
+
     .mui-content {
         padding-bottom: 50px;
         position: relative;

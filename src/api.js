@@ -53,3 +53,7 @@ export var ProDetail = params => {
 export var ProDesc = params => {
     return axios.get("/api/goods/getdesc/" + params).then(res => res)
 }
+
+export var AllPro = params => {
+    return axios.get("/api/goods/getshopcarlist/" + params).then(res => res)
+}
