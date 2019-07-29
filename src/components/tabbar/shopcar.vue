@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="content-box">
 
-    <div class="mui-card shopcar-info" v-for="item in proList" :key="item.id">
+    <div class="mui-card shopcar-info" v-for="(item, i) in proList" :key="item.id">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-            <mt-switch></mt-switch>
+            <mt-switch v-model="$store.getters.getGoodsSelected[item.id]"
+                       @change="selectChange(item.id, $store.getters.getGoodsSelected[item.id])"></mt-switch>
 
             <div class="info-inner">
                 <h3>{{ item.title }}</h3>
@@ -14,11 +15,12 @@
                 <div class="info-right">
                     <p>价格：<span>￥{{ item.sell_price}}</span></p>
                     <p>
-                        <numbox></numbox>
+                        <numbox :initCount="$store.getters.getGoodsCount[item.id]"
+                                :goodsid="item.id" ></numbox>
                     </p>
                 </div>
                 <div class="del-pro">
-                    <a href="#">删除</a>
+                    <a href="#" @click="delGoods(item.id, i)">删除</a>
                 </div>
             </div>
         </div>
@@ -28,7 +30,18 @@
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
-            这里将来是结算购物车的信息
+            <div class="total">
+                <div class="total-price">
+                    <h4>结算清单：</h4>
+                    <p>
+                        <span>已选：<strong>{{ $store.getters.getGoodsCountAndPrice.count }}</strong> 件</span>
+                        <span>总计：<strong>￥{{ $store.getters.getGoodsCountAndPrice.amount }}</strong></span>
+                    </p>
+                </div>
+                <div class="total-btn">
+                    <mt-button type="danger">立即支付</mt-button>
+                </div>
+            </div>
         </div>
       </div>
     </div>
@@ -64,9 +77,20 @@ export default {
 
             AllPro(idArr.join()).then(res => {
                 if(res.data.status == 0) {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.proList = res.data.message
                 }
+            })
+        },
+        delGoods(id, i) {
+            // 1.0 删除本地的数据
+            this.proList.splice(i, 1)
+            this.$store.commit("removeInfo", id)
+        },
+        selectChange(id, val) {
+            this.$store.commit('updateGoodSelected', {
+                id: id,
+                selected: val
             })
         }
     }
@@ -74,6 +98,11 @@ export default {
 </script>
 
 <style scoped>
+    .content-box {
+        padding-bottom: 60px;
+        overflow: hidden;
+    }
+
     .shopcar-info .mui-card-content-inner {
         display: flex;
         padding: 5px 10px;
@@ -93,12 +122,13 @@ export default {
 
     .shopcar-info h3 {
         flex: 1 1 auto;
-        width: 240px;
+        width: 260px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         margin-left: -10px;
+        text-align: left;
     }
 
     .info-right {
@@ -127,6 +157,28 @@ export default {
         align-items: center;
         justify-content: center;
         font-size: 14px;
+    }
+
+    .total {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: left;
+        text-indent: 2em;
+    }
+
+    .total > div {
+        flex: 1;
+    }
+
+    .total span {
+        display: block;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+
+    .total strong {
+        color: #f40;
     }
 
 </style>

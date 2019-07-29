@@ -36,15 +36,79 @@ var store = new Vuex.Store({
         if(!flag) state.car.push(proO)
 
         localStorage.setItem('proCar', JSON.stringify(state.car))
+      },
+      updateGoodsInfo(state, goodsinfo) {
+        state.car.some(item => {
+          if(item.id == goodsinfo.id) {
+            item.count = parseInt(goodsinfo.count)
+            return true
+          }
+        })
+
+        localStorage.setItem('proCar', JSON.stringify(state.car))
+      },
+      removeInfo(state, id) {
+        // 这里需要对应的每一条数据和其对应的索引
+        state.car.some((item, i) => {
+          if(item.id == id) {
+            // 删除数据的第索引项开始的一条
+            state.car.splice(i, 1)
+            return true
+          }
+        })
+
+        localStorage.setItem('proCar', JSON.stringify(state.car))
+      },
+      updateGoodSelected(state, msg) {
+        state.car.some(item => {
+          if(item.id == msg.id) {
+            // 将传过来的状态在仓库管理中改变
+            item.selected = msg.selected
+            return true
+          }
+        })
+
+        localStorage.setItem('proCar', JSON.stringify(state.car))
       }
     },
     getters: {
       getAll(state) {
         var c = 0
         state.car.forEach(item => {
-          c += item.count
+          if(item.selected) {
+            c += item.count
+          }
         })
         return c
+      },
+      getGoodsCount(state) {
+        var o = {}
+        state.car.forEach(item => {
+          o[item.id] = item.count
+        })
+        return o
+      },
+      getGoodsSelected(state) {
+        var o = {}
+        state.car.forEach(item => {
+          // 将每条数据中的状态赋值给对应id的属性
+          o[item.id] = item.selected
+        })
+        return o
+      },
+      getGoodsCountAndPrice(state) {
+        var o = {
+          count: 0,
+          amount: 0
+        } 
+        // 遍历计算总数
+        state.car.forEach(item => {
+          if(item.selected) {
+            o.count += item.count
+            o.amount += item.price * item.count
+          }
+        })
+        return o
       }
     }
 })

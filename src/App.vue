@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <!-- topNav -->
-    <mt-header fixed title="cms案例"></mt-header>
+    <mt-header fixed title="cms案例">
+      <span slot="left" @click="backToPage" v-show="flag">
+        <mt-button icon="back">返回</mt-button>
+      </span>
+    </mt-header>
 
     <!-- main区域 -->
     <transition>
@@ -38,10 +42,32 @@
 import mui from './assets/lib/mui/dist/js/mui.js'
 
 export default {
+  data() {
+    return {
+      flag: false
+    }
+  },
+  created() {
+    this.flag = this.$route.path == '/home' ? false : true
+  },
   mounted() {
     mui("header, nav").on("tap", "a", function() {
       mui.openWindow({url: this.href})
     })
+  },
+  methods: {
+    backToPage() {
+      this.$router.go(-1)
+    }
+  },
+  watch: {
+    '$route.path': function(newVal) {
+      if(newVal == '/home') {
+        this.flag = false
+      } else {
+        this.flag = true
+      }
+    }
   }
 }
 </script>
